@@ -8,6 +8,16 @@ from typing import Tuple, List
 
 
 def zoom_array(lst: Tuple, factor: int = 2) -> List:
+    """Create a zoomed array from a tuple.
+
+    Args:
+        lst: A tuple of integers to zoom
+        factor: The number of times to repeat each element (default=2)
+
+    Returns:
+        List containing the zoomed array where each element is repeated
+        based on the zoom factor
+    """
     zoomed_in: List = [
         item for item in lst
         for i in range(factor)
