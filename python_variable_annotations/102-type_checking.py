@@ -1,4 +1,9 @@
 #!/usr/bin/env python3
+"""Zoom Array Module.
+
+This module provides a function to create a zoomed array by duplicating
+each element a specified number of times.
+"""
 from typing import Tuple, List
 
 
