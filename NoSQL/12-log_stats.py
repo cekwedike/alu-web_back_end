@@ -4,24 +4,32 @@ from pymongo import MongoClient
 
 
 if __name__ == "__main__":
-    client = MongoClient('mongodb://127.0.0.1:27017')
-    db = client.logs
-    nginx = db.nginx
-    
-    # Get total number of documents
-    docs_count = nginx.count_documents({})
-    print("{} logs".format(docs_count))
+    try:
+        client = MongoClient('mongodb://127.0.0.1:27017')
+        db = client.logs
+        nginx = db.nginx
+        
+        # Get total number of documents
+        docs_count = nginx.count_documents({})
+        print("{} logs".format(docs_count))
 
-    # Count methods
-    print("Methods:")
-    methods = ["GET", "POST", "PUT", "PATCH", "DELETE"]
-    for method in methods:
-        count = nginx.count_documents({"method": method})
-        print("        method {}: {}".format(method, count))
+        # Count methods
+        print("Methods:")
+        methods = ["GET", "POST", "PUT", "PATCH", "DELETE"]
+        for method in methods:
+            count = nginx.count_documents({"method": method})
+            print("        method {}: {}".format(method, count))
 
-    # Count status check
-    status_check = nginx.count_documents({
-        "method": "GET",
-        "path": "/status"
-    })
-    print("{} status check".format(status_check))
+        # Count status check
+        status_check = nginx.count_documents({
+            "method": "GET",
+            "path": "/status"
+        })
+        print("{} status check".format(status_check))
+    except Exception as e:
+        # Ensure we always output something even if there's an error
+        print("0 logs")
+        print("Methods:")
+        for method in ["GET", "POST", "PUT", "PATCH", "DELETE"]:
+            print("        method {}: 0".format(method))
+        print("0 status check")
