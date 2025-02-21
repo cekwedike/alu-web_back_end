@@ -10,18 +10,18 @@ if __name__ == "__main__":
     
     # Get total number of documents
     docs_count = nginx.count_documents({})
-    print(f"{docs_count} logs")
+    print("{} logs".format(docs_count))
 
     # Count methods
     print("Methods:")
     methods = ["GET", "POST", "PUT", "PATCH", "DELETE"]
     for method in methods:
         count = nginx.count_documents({"method": method})
-        print(f"\tmethod {method}: {count}")
+        print("        method {}: {}".format(method, count))
 
     # Count status check
     status_check = nginx.count_documents({
         "method": "GET",
         "path": "/status"
     })
-    print(f"{status_check} status check")
+    print("{} status check".format(status_check))
