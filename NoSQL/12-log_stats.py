@@ -33,10 +33,7 @@ def print_nginx_request_logs(nginx_collection):
     print(f'{status_checks} status check')
 
 
-def run():
-    '''
-    Main function to connect to MongoDB and run the analysis
-    '''
+if __name__ == '__main__':
     # Connect to MongoDB (default host and port)
     client = MongoClient('mongodb://127.0.0.1:27017')
     
@@ -45,7 +42,3 @@ def run():
     
     # Print the statistics
     print_nginx_request_logs(nginx_collection)
-
-
-if __name__ == '__main__':
-    run()
