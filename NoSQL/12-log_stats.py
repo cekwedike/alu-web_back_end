@@ -3,29 +3,36 @@
 from pymongo import MongoClient
 
 
-def print_nginx_logs_stats():
-    """Prints stats about Nginx logs stored in MongoDB"""
+def print_logs_stats():
+    """Print nginx logs stats."""
     client = MongoClient('mongodb://127.0.0.1:27017')
-    logs_collection = client.logs.nginx
+    collection = client.logs.nginx
 
-    # Count total logs
-    total_logs = logs_collection.count_documents({})
-    print(f"{total_logs} logs")
+    try:
+        # Count total logs
+        n_logs = collection.count_documents({})
+        print("%d logs" % n_logs)
 
-    # Print methods stats
-    print("Methods:")
-    methods = ["GET", "POST", "PUT", "PATCH", "DELETE"]
-    for method in methods:
-        count = logs_collection.count_documents({"method": method})
-        print(f"\tmethod {method}: {count}")
+        # Methods section
+        print("Methods:")
+        methods = ["GET", "POST", "PUT", "PATCH", "DELETE"]
+        for method in methods:
+            n_method = collection.count_documents({"method": method})
+            print("\tmethod %s: %d" % (method, n_method))
 
-    # Count status check
-    status_checks = logs_collection.count_documents({
-        "method": "GET",
-        "path": "/status"
-    })
-    print(f"{status_checks} status check")
+        # Status check
+        n_status = collection.count_documents(
+            {"method": "GET", "path": "/status"}
+        )
+        print("%d status check" % n_status)
+
+    except:
+        print("0 logs")
+        print("Methods:")
+        for method in ["GET", "POST", "PUT", "PATCH", "DELETE"]:
+            print("\tmethod %s: 0" % method)
+        print("0 status check")
 
 
 if __name__ == "__main__":
-    print_nginx_logs_stats()
+    print_logs_stats()
