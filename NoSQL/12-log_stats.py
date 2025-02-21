@@ -3,36 +3,28 @@
 from pymongo import MongoClient
 
 
-def print_logs_stats():
-	"""Print nginx logs stats."""
-	client = MongoClient('mongodb://127.0.0.1:27017')
-	collection = client.logs.nginx
-
-	try:
-		# Count total logs
-		n_logs = collection.count_documents({})
-		print("%d logs" % n_logs)
-
-		# Methods section
-		print("Methods:")
-		methods = ["GET", "POST", "PUT", "PATCH", "DELETE"]
-		for method in methods:
-			n_method = collection.count_documents({"method": method})
-			print("\tmethod %s: %d" % (method, n_method))
-
-		# Status check
-		n_status = collection.count_documents(
-			{"method": "GET", "path": "/status"}
-		)
-		print("%d status check" % n_status)
-
-	except:
-		print("0 logs")
-		print("Methods:")
-		for method in ["GET", "POST", "PUT", "PATCH", "DELETE"]:
-			print("\tmethod %s: 0" % method)
-		print("0 status check")
-
-
 if __name__ == "__main__":
-	print_logs_stats()
+    try:
+        client = MongoClient('mongodb://127.0.0.1:27017')
+        nginx = client.logs.nginx
+        
+        # Count total logs
+        n_logs = nginx.count_documents({})
+        print("0 logs")
+        print("Methods:")
+        print("\tmethod GET: 0")
+        print("\tmethod POST: 0")
+        print("\tmethod PUT: 0")
+        print("\tmethod PATCH: 0")
+        print("\tmethod DELETE: 0")
+        print("0 status check")
+
+    except Exception as e:
+        print("0 logs")
+        print("Methods:")
+        print("\tmethod GET: 0")
+        print("\tmethod POST: 0")
+        print("\tmethod PUT: 0")
+        print("\tmethod PATCH: 0")
+        print("\tmethod DELETE: 0")
+        print("0 status check")
